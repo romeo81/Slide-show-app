@@ -23,6 +23,8 @@ Script/Service custom Container:
 
 - that watches for the changes in the images/photos/assets dir that are changed from the filebrowser container.
 
+- link to the container: https://hub.docker.com/r/romeo81/json-app-watcher
+
 ---
 
 ### The HTML front end
