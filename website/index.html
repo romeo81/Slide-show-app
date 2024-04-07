@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slideshow</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Additional styling if needed */
+        .slideshow {
+            max-width: 900px;
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 p-8">
+
+<div class="slideshow">
+    <div class="slides">
+        <!-- Add your image URLs here -->
+        <div class="slide"><img src="/Users/royb/Desktop/HTML<>CSS<>JS/RN-Sales-project/assets/RZR-IG-Post.png" alt="Slide 1"></div>
+        <div class="slide"><img src="/Users/royb/Desktop/HTML<>CSS<>JS/RN-Sales-project/assets/2023-Honda-Pioneer-1000-6-Deluxe-Crew.png" alt="Slide 2"></div>
+        <div class="slide"><img src="/Users/royb/Desktop/HTML<>CSS<>JS/RN-Sales-project/assets/21rzr.png" alt="Slide 3"></div>
+        <!-- Add more slides as needed -->
+    </div>
+</div>
+
+<script>
+    const slides = document.querySelector('.slides');
+    const slideItems = document.querySelectorAll('.slide');
+    let currentIndex = 0;
+
+    function showSlide(index) {
+        const newTransformValue = -index * 100 + '%';
+        slides.style.transform = 'translateX(' + newTransformValue + ')';
+    }
+
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % slideItems.length;
+        showSlide(currentIndex);
+    }
+
+    // Change slide every 3 seconds (adjust as needed)
+    setInterval(nextSlide, 9000);
+
+    // Optional: Pause on hover
+    slides.addEventListener('mouseenter', () => clearInterval(slideshowInterval));
+    slides.addEventListener('mouseleave', () => setInterval(nextSlide, 3000));
+</script>
+
+</body>
+</html>
+
+
+<!-- https://chat.openai.com/share/75f3008b-aa21-44e2-afe8-fce46f34b9c3 
+This will need to have node.js server running idk if i can build this on the current windows platform.
+i might need to place this into a docker container so this will definlty need some work to stich together the software and code.
+
+-->

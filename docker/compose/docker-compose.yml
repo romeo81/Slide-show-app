@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+  nginx:
+    image: linuxserver/nginx:latest
+    container_name: nginx-kiosk
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /portainer/Files/AppData/Config/app/nginx:/config
+      - /portainer/Files/AppData/Config/app/nginx/photos:/usr/share/nginx/html/photos
+      - /portainer/Files/AppData/Config/app/nginx:/usr/share/nginx/html/json
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+  apache:
+    image: httpd:latest
+    container_name: json-backend-api
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /portainer/Files/AppData/Config/app/apache-httpd:/usr/local/apache2/htdocs/
+    ports:
+      - "8081:80"
+    restart: unless-stopped
+
+  filebrowser:
+    image: filebrowser/filebrowser:latest
+    volumes:
+      - /portainer/Files/AppData/Config/app/:/srv
+      - /portainer/Files/AppData/Config/app/filebrowser/filebrowser.db:/database/filebrowser.db
+      - /portainer/Files/AppData/Config/app/filebrowser/settings.json:/config/settings.json
+    ports:
+      - "8082:80"
+    restart: unless-stopped
+
+  json-generator:
+    image: romeo81/json-app-watcher:v0.3 #this will be updated to be public on dockerhub once it can be compiled for diff arch's
+    volumes:
+      - /portainer/Files/AppData/Config/app/nginx/photos:/photos
+      - /portainer/Files/AppData/Config/app/custom:/json
+    environment:
+      - PHOTO_DIR=/photos
+      - JSON_DIR=/json
+    restart: unless-stopped
+volumes:
+  photos:
+  json:
